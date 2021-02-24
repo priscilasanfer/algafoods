@@ -10,5 +10,4 @@ import java.util.List;
 public interface CozinhaRepository extends JpaRepository<Cozinha, Long> {
 	List<Cozinha> findByNome (String nome);
 	boolean existsByNome(String nome);
-	int countByCozinhaId(Long cozinha);
 }

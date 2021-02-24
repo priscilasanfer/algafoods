@@ -23,4 +23,6 @@ public interface RestauranteRepository
     Optional<Restaurante> findFirstByNomeContaining(String nome);
 
     List<Restaurante> findTop2ByNomeContaining(String nome);
+
+    int countByCozinhaId(Long cozinha);
 }

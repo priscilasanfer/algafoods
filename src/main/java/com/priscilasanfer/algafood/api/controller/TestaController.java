@@ -7,7 +7,6 @@ import com.priscilasanfer.algafood.domain.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
@@ -34,9 +33,9 @@ public class TestaController {
         return restauranteRepository.findByTaxaFreteBetween(taxaInicial, taxaFinal);
     }
 
-    @GetMapping("/restaurantes/por-taxa-frete")
-    public List<Restaurante> restaurantesPorTaxaUsandoInterface (String nome, BigDecimal taxaInicial, BigDecimal taxaFinal){
-        return restauranteRepository.find(nome, taxaInicial, taxaFinal);
+    @GetMapping("/restaurantes/por-taxa-frete-interface")
+    public List<Restaurante> restaurantesPorTaxaUsandoInterface (String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal){
+        return restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
     }
 
     @GetMapping("/restaurantes/por-nome")
@@ -61,6 +60,6 @@ public class TestaController {
 
     @GetMapping("cozinha/count-por-cozinha")
     public int cozinhaCount(Long cozinhaId){
-        return cozinhaRepository.countByCozinhaId(cozinhaId);
+        return restauranteRepository.countByCozinhaId(cozinhaId);
     }
 }
