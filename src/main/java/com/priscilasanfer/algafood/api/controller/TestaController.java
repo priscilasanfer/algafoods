@@ -26,7 +26,7 @@ public class TestaController {
     @Autowired
     private RestauranteRepository restauranteRepository;
 
-    @GetMapping("cozinha/por-nome")
+    @GetMapping("/cozinha/por-nome")
     public List<Cozinha> cozinhasPorNome(String nome){
         return cozinhaRepository.findByNome(nome);
     }
@@ -56,12 +56,12 @@ public class TestaController {
         return restauranteRepository.findTop2ByNomeContaining(nome);
     }
 
-    @GetMapping("cozinha/exists")
+    @GetMapping("/cozinha/exists")
     public boolean cozinhaExist(String nome){
         return cozinhaRepository.existsByNome(nome);
     }
 
-    @GetMapping("restaurantes/count-por-cozinha")
+    @GetMapping("/restaurantes/count-por-cozinha")
     public int cozinhaCount(Long cozinhaId){
         return restauranteRepository.countByCozinhaId(cozinhaId);
     }
@@ -70,5 +70,10 @@ public class TestaController {
     public List<Restaurante> restaurantesComFreteGratis(String nome){
 
         return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
+    }
+
+    @GetMapping("/restaurantes/primeiro")
+    public Optional<Restaurante> restaurantePrimeiro(){
+        return restauranteRepository.buscarPrimeiro();
     }
 }
