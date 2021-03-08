@@ -19,7 +19,7 @@ public class CustomJpaRepositoryImpl<T, ID>
     }
 
     @Override
-    public Optional<T> buscarPrimeiro(ID id) {
+    public Optional<T> buscarPrimeiro() {
         var jpql = "from " + getDomainClass().getName();
         T entity = manager.createQuery(jpql, getDomainClass()).setMaxResults(1).getSingleResult();
         return Optional.ofNullable(entity);

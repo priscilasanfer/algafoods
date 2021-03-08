@@ -67,13 +67,14 @@ public class RestauranteController {
     public ResponseEntity<?> atualizar(@PathVariable Long restauranteId,
                                        @RequestBody Restaurante restaurante) {
         try {
-            Optional<Restaurante> restauranteAtual = restauranteRepository.findById(restauranteId);
+            Restaurante restauranteAtual = restauranteRepository
+                    .findById(restauranteId).orElse(null);
 
-            if (restauranteAtual.isPresent()) {
-                BeanUtils.copyProperties(restaurante, restauranteAtual.get(), "id");
+            if (restauranteAtual != null) {
+                BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
 
-                Restaurante restauranteSalvo = cadastroRestaurante.salvar(restauranteAtual.get());
-                return ResponseEntity.ok(restauranteSalvo);
+                restauranteAtual = cadastroRestaurante.salvar(restauranteAtual);
+                return ResponseEntity.ok(restauranteAtual);
             }
 
             return ResponseEntity.notFound().build();
@@ -84,18 +85,19 @@ public class RestauranteController {
         }
     }
 
-    @PatchMapping("/restaurante{Id}")
+    @PatchMapping("/{restauranteId}")
     public ResponseEntity<?> atualizarParcial(@PathVariable Long restauranteId,
                                               @RequestBody Map<String, Object> campos) {
-        Optional<Restaurante> restauranteAtual = restauranteRepository.findById(restauranteId);
+        Restaurante restauranteAtual = restauranteRepository
+                .findById(restauranteId).orElse(null);
 
-        if (restauranteAtual.isEmpty()) {
+        if (restauranteAtual == null) {
             return ResponseEntity.notFound().build();
         }
 
-        merge(campos, restauranteAtual.get());
+        merge(campos, restauranteAtual);
 
-        return atualizar(restauranteId, restauranteAtual.get());
+        return atualizar(restauranteId, restauranteAtual);
     }
 
     private void merge(Map<String, Object> dadosOrigem, Restaurante restauranteDestino) {
@@ -107,7 +109,9 @@ public class RestauranteController {
             field.setAccessible(true);
 
             Object novoValor = ReflectionUtils.getField(field, restauranteOrigem);
-//            System.out.println(nomePropriedade + " = " + valorPropriedade + " = " + novoValor);
+
+//			System.out.println(nomePropriedade + " = " + valorPropriedade + " = " + novoValor);
+
             ReflectionUtils.setField(field, restauranteDestino, novoValor);
         });
     }

@@ -3,7 +3,6 @@ package com.priscilasanfer.algafood.infrastructure.repository;
 import com.priscilasanfer.algafood.domain.model.Restaurante;
 import com.priscilasanfer.algafood.domain.repository.RestauranteRepository;
 import com.priscilasanfer.algafood.domain.repository.RestauranteRepositoryQueries;
-import com.priscilasanfer.algafood.infrastructure.repository.spec.RestauranteSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
@@ -29,8 +28,7 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
     @PersistenceContext
     private EntityManager manager;
 
-    @Autowired
-    @Lazy
+    @Autowired @Lazy
     private RestauranteRepository restauranteRepository;
 
     @Override
@@ -46,7 +44,7 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
             predicates.add(builder.like(root.get("nome"), "%" + nome + "%"));
         }
 
-        if (taxaFreteFinal != null) {
+        if (taxaFreteInicial != null) {
             predicates.add(builder.greaterThanOrEqualTo(root.get("taxaFrete"), taxaFreteInicial));
         }
 
