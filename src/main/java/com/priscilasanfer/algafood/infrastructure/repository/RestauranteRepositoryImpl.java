@@ -19,9 +19,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.priscilasanfer.algafood.infrastructure.repository.spec.RestauranteSpecs.comFreteGratis;
-import static com.priscilasanfer.algafood.infrastructure.repository.spec.RestauranteSpecs.comNomeSemelhante;
-
 @Repository
 public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 
