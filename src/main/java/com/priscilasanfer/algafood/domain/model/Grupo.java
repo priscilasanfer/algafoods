@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -27,8 +28,9 @@ public class Grupo {
     private String nome;
 
     @ManyToMany
-    @JoinTable(name = "grupos_permissao",
+    @JoinTable(name = "grupo_permissao",
             joinColumns = @JoinColumn(name = "grupo_id"),
             inverseJoinColumns = @JoinColumn(name = "permissao_id"))
-    private List<Permissao> permissoes;
+    private List<Permissao> permissoes = new ArrayList<>();
+
 }
