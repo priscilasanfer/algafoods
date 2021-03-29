@@ -1,7 +1,7 @@
 package com.priscilasanfer.algafood.domain.service;
 
 import com.priscilasanfer.algafood.domain.exception.EntidadeEmUsoException;
-import com.priscilasanfer.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.priscilasanfer.algafood.domain.exception.EstadoNaoEncontradoException;
 import com.priscilasanfer.algafood.domain.model.Estado;
 import com.priscilasanfer.algafood.domain.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CadastroEstadoService {
 
-    private static final String MSG_ESTADO_NAO_ENCONTRADA = "Não existe um cadastro de estado com código %d";
     public static final String MSG_ESTADO_EM_USO = "Estado de código %d não pode ser removido, pois está em uso";
 
     @Autowired
@@ -27,8 +26,7 @@ public class CadastroEstadoService {
             estadoRepository.deleteById(estadoId);
 
         } catch (EmptyResultDataAccessException e) {
-            throw new EntidadeNaoEncontradaException(
-                    String.format(MSG_ESTADO_NAO_ENCONTRADA, estadoId));
+            throw new EstadoNaoEncontradoException(estadoId);
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
@@ -36,8 +34,8 @@ public class CadastroEstadoService {
         }
     }
 
-    public Estado buscasOuFalhar (Long id){
-        return estadoRepository.findById(id).orElseThrow(()-> new EntidadeNaoEncontradaException(String.format(MSG_ESTADO_NAO_ENCONTRADA, id)));
+    public Estado buscasOuFalhar (Long estadoId){
+        return estadoRepository.findById(estadoId).orElseThrow(()-> new EstadoNaoEncontradoException(estadoId));
     }
 
 }

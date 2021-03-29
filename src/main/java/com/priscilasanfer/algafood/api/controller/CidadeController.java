@@ -46,20 +46,18 @@ public class CidadeController {
         try {
             return cadastroCidade.salvar(cidade);
         } catch (EntidadeNaoEncontradaException e) {
-            throw new NegocioException(e.getMessage());
+            throw new NegocioException(e.getMessage(), e);
         }
     }
 
     @PutMapping("/{cidadeId}")
     public Cidade atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade) {
-        Cidade cidadeAtual = cadastroCidade.buscasOuFalhar(cidadeId);
-
-        BeanUtils.copyProperties(cidade, cidadeAtual, "id");
-
         try {
+            Cidade cidadeAtual = cadastroCidade.buscasOuFalhar(cidadeId);
+            BeanUtils.copyProperties(cidade, cidadeAtual, "id");
             return cadastroCidade.salvar(cidadeAtual);
         } catch (EntidadeNaoEncontradaException e) {
-            throw new NegocioException(e.getMessage());
+            throw new NegocioException(e.getMessage(), e);
         }
     }
 
