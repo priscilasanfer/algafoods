@@ -1,5 +1,6 @@
 package com.priscilasanfer.algafood.api.exceptionHandler;
 
+import com.priscilasanfer.algafood.domain.exception.EntidadeEmUsoException;
 import com.priscilasanfer.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.NegocioException;
 import org.springframework.http.HttpStatus;
@@ -42,6 +43,16 @@ public class ApiExceptionHandler {
                 .mensagem("O tipo de mídia não é suportado").build();
 
         return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE )
+                .body(problema);
+    }
+
+    @ExceptionHandler(EntidadeEmUsoException.class)
+    public ResponseEntity<?> tratarEntidadeEmUsoException(EntidadeEmUsoException e){
+        Problema problema = Problema.builder()
+                .dataHora(LocalDateTime.now())
+                .mensagem(e.getMessage()).build();
+
+        return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(problema);
     }
 }
