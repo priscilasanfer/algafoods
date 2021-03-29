@@ -1,6 +1,7 @@
 package com.priscilasanfer.algafood.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.priscilasanfer.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.NegocioException;
 import com.priscilasanfer.algafood.domain.model.Restaurante;
@@ -49,7 +50,7 @@ public class RestauranteController {
     public Restaurante adicionar(@RequestBody Restaurante restaurante) {
         try {
             return cadastroRestaurante.salvar(restaurante);
-        } catch (EntidadeNaoEncontradaException e) {
+        } catch (CozinhaNaoEncontradaException e) {
             throw new NegocioException(e.getMessage());
         }
     }
@@ -64,7 +65,7 @@ public class RestauranteController {
 
         try {
             return cadastroRestaurante.salvar(restauranteAtual);
-        } catch (EntidadeNaoEncontradaException e) {
+        } catch (CozinhaNaoEncontradaException e) {
             throw new NegocioException(e.getMessage());
         }
     }

@@ -1,7 +1,7 @@
 package com.priscilasanfer.algafood.domain.service;
 
+import com.priscilasanfer.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.EntidadeEmUsoException;
-import com.priscilasanfer.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.model.Cidade;
 import com.priscilasanfer.algafood.domain.model.Estado;
 import com.priscilasanfer.algafood.domain.repository.CidadeRepository;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CadastroCidadeService {
 
-    public static final String MSG_CIDADE_NAO_ENCONTRADA = "Não existe um cadastro de cidade com código %d";
     public static final String MSG_CIDADE_EM_USO = "Cidade de código %d não pode ser removida, pois está em uso";
 
     @Autowired
@@ -35,8 +34,7 @@ public class CadastroCidadeService {
             cidadeRepository.deleteById(cidadeId);
 
         } catch (EmptyResultDataAccessException e) {
-            throw new EntidadeNaoEncontradaException(
-                    String.format(MSG_CIDADE_NAO_ENCONTRADA, cidadeId));
+            throw new CidadeNaoEncontradaException(cidadeId);
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
@@ -44,8 +42,8 @@ public class CadastroCidadeService {
         }
     }
 
-    public Cidade buscasOuFalhar (Long id){
-        return cidadeRepository.findById(id).orElseThrow(()-> new EntidadeNaoEncontradaException(String.format(MSG_CIDADE_NAO_ENCONTRADA, id)));
+    public Cidade buscasOuFalhar(Long cidadeId) {
+        return cidadeRepository.findById(cidadeId).orElseThrow(() -> new CidadeNaoEncontradaException(cidadeId));
     }
 
 }
