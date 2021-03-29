@@ -2,7 +2,6 @@ package com.priscilasanfer.algafood.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.priscilasanfer.algafood.domain.exception.CozinhaNaoEncontradaException;
-import com.priscilasanfer.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.NegocioException;
 import com.priscilasanfer.algafood.domain.model.Restaurante;
 import com.priscilasanfer.algafood.domain.repository.RestauranteRepository;
@@ -58,12 +57,12 @@ public class RestauranteController {
     @PutMapping("/{restauranteId}")
     public Restaurante atualizar(@PathVariable Long restauranteId,
                                  @RequestBody Restaurante restaurante) {
-        Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
-
-        BeanUtils.copyProperties(restaurante, restauranteAtual,
-                "id", "formasDePagamentos", "endereco", "dataCadastro", "produtos");
-
         try {
+            Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
+
+            BeanUtils.copyProperties(restaurante, restauranteAtual,
+                    "id", "formasDePagamentos", "endereco", "dataCadastro", "produtos");
+
             return cadastroRestaurante.salvar(restauranteAtual);
         } catch (CozinhaNaoEncontradaException e) {
             throw new NegocioException(e.getMessage());

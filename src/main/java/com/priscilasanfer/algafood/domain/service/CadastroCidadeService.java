@@ -13,17 +13,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class CadastroCidadeService {
 
-    public static final String MSG_CIDADE_EM_USO = "Cidade de código %d não pode ser removida, pois está em uso";
+    private static final String MSG_CIDADE_EM_USO = "Cidade de código %d não pode ser removida, pois está em uso";
 
     @Autowired
     private CidadeRepository cidadeRepository;
 
     @Autowired
-    private CadastroEstadoService estadoService;
+    private CadastroEstadoService cadastroEstado;
 
     public Cidade salvar(Cidade cidade) {
         Long estadoId = cidade.getEstado().getId();
-        Estado estado = estadoService.buscasOuFalhar(estadoId);
+        Estado estado = cadastroEstado.buscarOuFalhar(estadoId);
         cidade.setEstado(estado);
 
         return cidadeRepository.save(cidade);
@@ -42,7 +42,7 @@ public class CadastroCidadeService {
         }
     }
 
-    public Cidade buscasOuFalhar(Long cidadeId) {
+    public Cidade buscarOuFalhar(Long cidadeId) {
         return cidadeRepository.findById(cidadeId).orElseThrow(() -> new CidadeNaoEncontradaException(cidadeId));
     }
 

@@ -1,14 +1,11 @@
 package com.priscilasanfer.algafood.api.controller;
 
-import com.priscilasanfer.algafood.domain.exception.EntidadeEmUsoException;
-import com.priscilasanfer.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.model.Estado;
 import com.priscilasanfer.algafood.domain.repository.EstadoRepository;
 import com.priscilasanfer.algafood.domain.service.CadastroEstadoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +35,7 @@ public class EstadoController {
 
     @GetMapping("/{estadoId}")
     public Estado buscar(@PathVariable Long estadoId) {
-        return cadastroEstado.buscasOuFalhar(estadoId);
+        return cadastroEstado.buscarOuFalhar(estadoId);
     }
 
     @PostMapping
@@ -50,7 +47,7 @@ public class EstadoController {
     @PutMapping("/{estadoId}")
     public Estado atualizar(@PathVariable Long estadoId,
                             @RequestBody Estado estado) {
-        Estado estadoAtual = cadastroEstado.buscasOuFalhar(estadoId);
+        Estado estadoAtual = cadastroEstado.buscarOuFalhar(estadoId);
 
         BeanUtils.copyProperties(estado, estadoAtual, "id");
 

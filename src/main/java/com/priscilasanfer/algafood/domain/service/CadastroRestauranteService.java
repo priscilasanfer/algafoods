@@ -14,18 +14,18 @@ public class CadastroRestauranteService {
     private RestauranteRepository restauranteRepository;
 
     @Autowired
-    private CadastroCozinhaService cozinhaService;
+    private CadastroCozinhaService cadastroCozinha;
 
     public Restaurante salvar(Restaurante restaurante) {
         Long cozinhaId = restaurante.getCozinha().getId();
-        Cozinha cozinha = cozinhaService.buscasOuFalhar(cozinhaId);
+        Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
         restaurante.setCozinha(cozinha);
 
         return restauranteRepository.save(restaurante);
     }
 
-    public Restaurante buscarOuFalhar (Long restauranteId){
-        return restauranteRepository.findById(restauranteId).orElseThrow(()-> new RestauranteNaoEncontradoException( restauranteId));
+    public Restaurante buscarOuFalhar(Long restauranteId) {
+        return restauranteRepository.findById(restauranteId).orElseThrow(() -> new RestauranteNaoEncontradoException(restauranteId));
     }
 
 }

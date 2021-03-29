@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CadastroCozinhaService {
 
-    public static final String MSG_COZINHA_EM_USO = "Cozinha de código %d não pode ser removida, pois está em uso";
+    private static final String MSG_COZINHA_EM_USO = "Cozinha de código %d não pode ser removida, pois está em uso";
 
     @Autowired
     private CozinhaRepository cozinhaRepository;
@@ -34,7 +34,7 @@ public class CadastroCozinhaService {
         }
     }
 
-    public Cozinha buscasOuFalhar(Long cozinhaId) {
+    public Cozinha buscarOuFalhar(Long cozinhaId) {
         return cozinhaRepository.findById(cozinhaId).orElseThrow(() -> new CozinhaNaoEncontradaException(cozinhaId));
     }
 }
