@@ -1,4 +1,4 @@
-package com.priscilasanfer.algafood;
+package com.priscilasanfer.algafood.core.validation;
 
 public interface Groups {
 

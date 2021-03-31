@@ -2,7 +2,6 @@ package com.priscilasanfer.algafood.api.controller;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.priscilasanfer.algafood.Groups;
 import com.priscilasanfer.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.NegocioException;
 import com.priscilasanfer.algafood.domain.model.Restaurante;
@@ -15,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;

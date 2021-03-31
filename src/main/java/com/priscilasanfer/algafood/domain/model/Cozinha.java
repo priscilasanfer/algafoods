@@ -2,7 +2,7 @@ package com.priscilasanfer.algafood.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.priscilasanfer.algafood.Groups;
+import com.priscilasanfer.algafood.core.validation.Groups;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
