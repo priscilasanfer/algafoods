@@ -7,7 +7,8 @@ public enum ProblemType {
     ENTIDADE_NAO_ENCONTRADA("/entidade-nao-encontrada", "Entidade não encontrada"),
     ERRO_NEGOCIO("/erro-negocio", "Violação de regra de negócio"),
     ENTIDADE_USO("/entidade-em-uso", "Entidade em uso"),
-    MENSAGEM_INCOMPREENSIVEL("/mensagem-incompreensivel", "Mensagem incompreensível");
+    MENSAGEM_INCOMPREENSIVEL("/mensagem-incompreensivel", "Mensagem incompreensível"),
+    PARAMETRO_INVALIDO("/parametro-invalido", "Parametro inválido");
 
     private String title;
     private String uri;
