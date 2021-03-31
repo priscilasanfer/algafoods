@@ -2,6 +2,7 @@ package com.priscilasanfer.algafood.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.priscilasanfer.algafood.core.validation.Groups;
+import com.priscilasanfer.algafood.core.validation.TaxaFrete;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
@@ -45,6 +46,7 @@ public class Restaurante {
 
     @NotNull
     @PositiveOrZero
+//    @TaxaFrete
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
