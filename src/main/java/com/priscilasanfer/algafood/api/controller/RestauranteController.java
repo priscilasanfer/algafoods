@@ -64,7 +64,7 @@ public class RestauranteController {
 
     @PutMapping("/{restauranteId}")
     public Restaurante atualizar(@PathVariable Long restauranteId,
-                                 @RequestBody Restaurante restaurante) {
+                                 @RequestBody @Valid Restaurante restaurante) {
         try {
             Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
 
@@ -79,7 +79,7 @@ public class RestauranteController {
 
     @PatchMapping("/{restauranteId}")
     public Restaurante atualizarParcial(@PathVariable Long restauranteId,
-                                        @RequestBody Map<String, Object> campos, HttpServletRequest request) {
+                                        @RequestBody @Valid Map<String, Object> campos, HttpServletRequest request) {
         Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
 
         merge(campos, restauranteAtual, request);
