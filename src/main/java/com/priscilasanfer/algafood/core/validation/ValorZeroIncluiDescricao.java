@@ -7,16 +7,20 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE})
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {MultiploValidator.class})
-public @interface Multiplo {
+@Constraint(validatedBy = {ValorZeroIncluiDescricaoValidator.class})
+public @interface ValorZeroIncluiDescricao {
 
-    String message() default "{multiplo.invalido}";
+    String message() default "Descrição Obrigatória Inválida";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    int numero ();
+    String valorField();
+
+    String descricaoField();
+
+    String descricaoObrigatoria();
 }
