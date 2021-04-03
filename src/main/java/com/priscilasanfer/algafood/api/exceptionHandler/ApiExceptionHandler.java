@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import com.priscilasanfer.algafood.domain.exception.EntidadeEmUsoException;
 import com.priscilasanfer.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.NegocioException;
+import com.priscilasanfer.algafood.domain.exception.ValidacaoException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -197,11 +198,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers, HttpStatus status,
                                                                   WebRequest request) {
-        ProblemType problemType = ProblemType.DADOS_INVALIDOS;
-        String detail = String.format("Um ou mais campos estão inválidos. " +
-                "Faça o preenchimento correto e tente novamente.");
+        return handleValidationInternal(ex, ex.getBindingResult(), headers, status, request);
+    }
 
-        BindingResult bindingResult = ex.getBindingResult();
+    private ResponseEntity<Object> handleValidationInternal(Exception ex, BindingResult bindingResult, HttpHeaders headers,
+                                                            HttpStatus status, WebRequest request) {
+
+        ProblemType problemType = ProblemType.DADOS_INVALIDOS;
+        String detail = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
+
         List<Problem.Object> problemObjects = bindingResult.getAllErrors().stream()
                 .map(objectError -> {
                     String message = messageSource.getMessage(objectError, LocaleContextHolder.getLocale());
@@ -212,7 +217,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                     }
 
                     return Problem.Object.builder()
-                            .nome(name)
+                            .name(name)
                             .userMessage(message)
                             .build();
                 })
@@ -222,7 +227,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 .userMessage(detail)
                 .objects(problemObjects)
                 .build();
-        return super.handleExceptionInternal(ex, problem, headers, status, request);
+        return handleExceptionInternal(ex, problem, headers, status, request);
+    }
+
+    @ExceptionHandler({ ValidacaoException.class })
+    public ResponseEntity<Object> handleValidacaoException(ValidacaoException ex, WebRequest request) {
+        return handleValidationInternal(ex, ex.getBindingResult(), new HttpHeaders(),
+                HttpStatus.BAD_REQUEST, request);
     }
 
     private Problem.ProblemBuilder createProblemBuilder(HttpStatus status, ProblemType problemType, String detail) {
