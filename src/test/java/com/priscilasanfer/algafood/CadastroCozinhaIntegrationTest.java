@@ -1,5 +1,7 @@
 package com.priscilasanfer.algafood;
 
+import com.priscilasanfer.algafood.domain.exception.CozinhaNaoEncontradaException;
+import com.priscilasanfer.algafood.domain.exception.EntidadeEmUsoException;
 import com.priscilasanfer.algafood.domain.model.Cozinha;
 import com.priscilasanfer.algafood.domain.service.CadastroCozinhaService;
 import org.junit.Test;
@@ -20,7 +22,7 @@ public class CadastroCozinhaIntegrationTest {
     private CadastroCozinhaService cadastroCozinha;
 
     @Test
-    public void testarCadastroCozinhaComSucesso() {
+    public void deveAtribuirIdQuandoCadastrarCozinhaComSucesso() {
         //Cenario
         Cozinha novaCozinha = new Cozinha();
         novaCozinha.setNome("Tailandeza");
@@ -35,10 +37,21 @@ public class CadastroCozinhaIntegrationTest {
     }
 
     @Test(expected = ConstraintViolationException.class)
-    public void testarCadastroCozinhaSemNome(){
+    public void deveFalharQuandoCadastrarCozinhaSemNome(){
         Cozinha novaCozinha = new Cozinha();
         novaCozinha.setNome(null);
 
         cadastroCozinha.salvar(novaCozinha);
     }
+
+    @Test(expected = EntidadeEmUsoException.class)
+    public void deveFalharQuandoExcluirCozinhaEmUso(){
+        cadastroCozinha.excluir(1L);
+    }
+
+    @Test(expected = CozinhaNaoEncontradaException.class)
+    public void deveFalharQuandoExcluirCozinhaInexistente(){
+        cadastroCozinha.excluir(1000L);
+    }
+
 }
