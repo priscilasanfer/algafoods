@@ -1,6 +1,7 @@
 package com.priscilasanfer.algafood.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.priscilasanfer.algafood.core.validation.Groups;
 import com.priscilasanfer.algafood.core.validation.ValorZeroIncluiDescricao;
 import lombok.Data;
@@ -50,6 +51,7 @@ public class Restaurante {
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
+    @JsonIgnoreProperties(value = "nome", allowGetters = true )
     @Valid
     @ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
     @NotNull
