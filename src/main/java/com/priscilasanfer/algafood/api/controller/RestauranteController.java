@@ -2,6 +2,7 @@ package com.priscilasanfer.algafood.api.controller;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.priscilasanfer.algafood.api.model.RestauranteModel;
 import com.priscilasanfer.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.NegocioException;
 import com.priscilasanfer.algafood.domain.exception.ValidacaoException;
@@ -52,8 +53,11 @@ public class RestauranteController {
     }
 
     @GetMapping("/{restauranteId}")
-    public Restaurante buscar(@PathVariable Long restauranteId) {
-        return cadastroRestaurante.buscarOuFalhar(restauranteId);
+    public RestauranteModel buscar(@PathVariable Long restauranteId) {
+        Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
+
+        RestauranteModel restauranteModel = null;
+        return restauranteModel;
     }
 
     @PostMapping
