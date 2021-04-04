@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static com.priscilasanfer.algafood.util.ReadFileAsString.readFileAsString;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
@@ -25,6 +26,9 @@ import static org.hamcrest.Matchers.hasSize;
 @TestPropertySource("/application-test.properties")
 public class CadastroCozinhaIT {
 
+    private static final String SRC_TEST_RESOURCES_FILES_REQUEST = "src/test/resources/json";
+    private static final int COZINHA_ID_INEXISTENTE = 100;
+
     @LocalServerPort
     private int port;
 
@@ -33,6 +37,10 @@ public class CadastroCozinhaIT {
 
     @Autowired
     private CozinhaRepository cozinhaRepository;
+
+    private int quantidadeCozinhasCadastradas;
+
+    private Cozinha cozinhaAmericana;
 
     @Before
     public void setUp(){
@@ -55,20 +63,22 @@ public class CadastroCozinhaIT {
     }
 
     @Test
-    public void deveConter2CozinhasQuandoConsultarCozinhas() {
+    public void deveRetornarQuantidadeCorretaDeCozinhasQuandoConsultarCozinhas() {
         given()
                 .accept(ContentType.JSON)
             .when()
                 .get()
             .then()
-                .body("", hasSize(2))
+                .body("", hasSize(quantidadeCozinhasCadastradas))
                 .body("nome", hasItems("Indiana", "Brasileira"));
     }
 
     @Test
-    public void deveRetornarStatus201QuandoCadastrarCozinha(){
+    public void deveRetornarStatus201QuandoCadastrarCozinha() {
+        String requestBody = readFileAsString(SRC_TEST_RESOURCES_FILES_REQUEST + "/cadastrarCozinhaRequest.json");
+
         given()
-                .body("{ \"nome\" : \"Chinesa\"}")
+                .body(requestBody)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
             .when()
@@ -80,35 +90,35 @@ public class CadastroCozinhaIT {
     @Test
     public void deveRetornarRespostaEStatusCorretoQuandoConsultarCozinhaExistente(){
         given()
-                .pathParam("cozinhaId", 2)
+                .pathParam("cozinhaId", cozinhaAmericana.getId())
                 .accept(ContentType.JSON)
             .when()
                 .get("/{cozinhaId}")
             .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("nome", equalTo("Indiana" ));
+                .body("nome", equalTo(cozinhaAmericana.getNome()));
     }
 
     @Test
     public void deveRetornarStatus404QuandoConsultarCozinhaInexistente(){
         given()
-                .pathParam("cozinhaId", 100)
+                .pathParam("cozinhaId", COZINHA_ID_INEXISTENTE)
                 .accept(ContentType.JSON)
             .when()
                 .get("/{cozinhaId}")
             .then()
-                .statusCode(HttpStatus.NOT_FOUND.value()); 
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
-    private void prepararDados (){
+    private void prepararDados(){
         Cozinha cozinha1 = new Cozinha();
         cozinha1.setNome("Brasileira");
         cozinhaRepository.save(cozinha1);
 
-        Cozinha cozinha2 = new Cozinha();
-        cozinha2.setNome("Indiana");
-        cozinhaRepository.save(cozinha2);
+        cozinhaAmericana = new Cozinha();
+        cozinhaAmericana.setNome("Indiana");
+        cozinhaRepository.save(cozinhaAmericana);
 
+        quantidadeCozinhasCadastradas = (int) cozinhaRepository.count();
     }
-
 }
