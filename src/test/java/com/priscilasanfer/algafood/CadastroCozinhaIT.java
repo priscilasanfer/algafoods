@@ -26,7 +26,7 @@ import static org.hamcrest.Matchers.hasSize;
 @TestPropertySource("/application-test.properties")
 public class CadastroCozinhaIT {
 
-    private static final String SRC_TEST_RESOURCES_FILES_REQUEST = "src/test/resources/json";
+    private static final String SRC_TEST_RESOURCES_FILES_REQUEST = "src/test/resources/json/cozinha";
     private static final int COZINHA_ID_INEXISTENTE = 100;
 
     @LocalServerPort
