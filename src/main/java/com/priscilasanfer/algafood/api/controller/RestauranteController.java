@@ -9,7 +9,6 @@ import com.priscilasanfer.algafood.domain.exception.NegocioException;
 import com.priscilasanfer.algafood.domain.model.Restaurante;
 import com.priscilasanfer.algafood.domain.repository.RestauranteRepository;
 import com.priscilasanfer.algafood.domain.service.CadastroRestauranteService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,7 +1,7 @@
 package com.priscilasanfer.algafood.api.assembler;
 
-import com.priscilasanfer.algafood.api.model.RestauranteModel;
-import com.priscilasanfer.algafood.domain.model.Restaurante;
+import com.priscilasanfer.algafood.api.model.CidadeModel;
+import com.priscilasanfer.algafood.domain.model.Cidade;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,19 +10,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class RestauranteModelAssembler {
-
+public class CidadeModelAssembler {
     @Autowired
     private ModelMapper modelMapper;
 
-    public RestauranteModel toModel(Restaurante restaurante) {
-        return modelMapper.map(restaurante, RestauranteModel.class);
+    public CidadeModel toModel(Cidade cidade) {
+        return modelMapper.map(cidade, CidadeModel.class);
     }
 
-    public List<RestauranteModel> toCollectionModel(List<Restaurante> restaurantes) {
-        return restaurantes.stream()
+    public List<CidadeModel> toCollectionModel(List<Cidade> cidades) {
+        return cidades.stream()
                 .map(this::toModel)
                 .collect(Collectors.toList());
     }
-
 }
