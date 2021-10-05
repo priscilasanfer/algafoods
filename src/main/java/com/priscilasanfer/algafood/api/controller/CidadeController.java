@@ -30,7 +30,7 @@ public class CidadeController {
     private CidadeModelAssembler cidadeModelAssembler;
 
     @Autowired
-    CidadeInputDisassembler cidadeInputDisassembler;
+    private CidadeInputDisassembler cidadeInputDisassembler;
 
     @GetMapping
     public List<CidadeModel> listar() {
