@@ -4,6 +4,7 @@ import com.priscilasanfer.algafood.api.assembler.RestauranteInputDisassembler;
 import com.priscilasanfer.algafood.api.assembler.RestauranteModelAssembler;
 import com.priscilasanfer.algafood.api.model.RestauranteModel;
 import com.priscilasanfer.algafood.api.model.input.RestauranteInput;
+import com.priscilasanfer.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.NegocioException;
 import com.priscilasanfer.algafood.domain.model.Restaurante;
@@ -50,7 +51,7 @@ public class RestauranteController {
         try {
             Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput);
             return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restaurante));
-        } catch (CozinhaNaoEncontradaException e) {
+        } catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) {
             throw new NegocioException(e.getMessage());
         }
     }
@@ -64,7 +65,7 @@ public class RestauranteController {
             restauranteInputDisassembler.copyToDomainObject(restauranteInput, restauranteAtual);
 
             return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
-        } catch (CozinhaNaoEncontradaException e) {
+        } catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) {
             throw new NegocioException(e.getMessage());
         }
     }
