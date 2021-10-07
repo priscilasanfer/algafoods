@@ -4,7 +4,6 @@ import com.priscilasanfer.algafood.domain.exception.RestauranteNaoEncontradoExce
 import com.priscilasanfer.algafood.domain.model.Cidade;
 import com.priscilasanfer.algafood.domain.model.Cozinha;
 import com.priscilasanfer.algafood.domain.model.Restaurante;
-import com.priscilasanfer.algafood.domain.repository.CidadeRepository;
 import com.priscilasanfer.algafood.domain.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
