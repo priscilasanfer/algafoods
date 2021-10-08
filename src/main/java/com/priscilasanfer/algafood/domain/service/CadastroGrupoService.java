@@ -1,6 +1,5 @@
 package com.priscilasanfer.algafood.domain.service;
 
-import com.priscilasanfer.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.EntidadeEmUsoException;
 import com.priscilasanfer.algafood.domain.exception.GrupoNaoEncontradoException;
 import com.priscilasanfer.algafood.domain.model.Grupo;
