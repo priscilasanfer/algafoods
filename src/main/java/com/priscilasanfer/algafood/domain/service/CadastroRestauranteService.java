@@ -56,7 +56,7 @@ public class CadastroRestauranteService {
         Restaurante restaurante = buscarOuFalhar(restauranteId);
         FormaPagamento formaPagamento = cadastroFormaPagamento.buscarOuFalhar(formaPagamentoId);
 
-        restaurante.removerFormaPagamento(formaPagamento);
+        restaurante.desassociarFormaPagamento(formaPagamento);
     }
 
     @Transactional
@@ -64,7 +64,7 @@ public class CadastroRestauranteService {
         Restaurante restaurante = buscarOuFalhar(restauranteId);
         FormaPagamento formaPagamento = cadastroFormaPagamento.buscarOuFalhar(formaPagamentoId);
 
-        restaurante.adicionarFormaPagamento(formaPagamento);
+        restaurante.associarFormaPagamento(formaPagamento);
     }
 
     public Restaurante buscarOuFalhar(Long restauranteId) {

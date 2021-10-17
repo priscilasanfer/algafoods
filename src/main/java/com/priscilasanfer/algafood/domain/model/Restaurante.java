@@ -60,7 +60,7 @@ public class Restaurante {
     @JoinTable(name = "restaurante_forma_pagamento",
             joinColumns = @JoinColumn(name = "restaurante_id"),
             inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
-    private Set<FormaPagamento> formasPagamento = new HashSet<>();
+    private Set<FormaPagamento> formasPagamentos = new HashSet<>();
 
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produtos = new ArrayList<>();
@@ -73,12 +73,12 @@ public class Restaurante {
         setAtivo(false);
     }
 
-    public boolean removerFormaPagamento(FormaPagamento formaPagamento) {
-        return getFormasPagamento().remove(formaPagamento);
+    public boolean desassociarFormaPagamento(FormaPagamento formaPagamento) {
+        return getFormasPagamentos().remove(formaPagamento);
     }
 
-    public boolean adicionarFormaPagamento(FormaPagamento formaPagamento) {
-        return getFormasPagamento().add(formaPagamento);
+    public boolean associarFormaPagamento(FormaPagamento formaPagamento) {
+        return getFormasPagamentos().add(formaPagamento);
     }
 
 }
