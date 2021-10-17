@@ -48,7 +48,8 @@ public class GrupoController {
     public GrupoModel adicionar(@RequestBody @Valid GrupoInput grupoInput) {
         try {
             Grupo grupo = grupoInputDisassembler.toDomainObject(grupoInput);
-            return grupoModelAssembler.toModel(cadastroGrupo.salvar(grupo));
+            grupo = cadastroGrupo.salvar(grupo);
+            return grupoModelAssembler.toModel(grupo);
         } catch (GrupoNaoEncontradoException e) {
             throw new NegocioException(e.getMessage());
         }
@@ -59,10 +60,9 @@ public class GrupoController {
                                 @RequestBody @Valid GrupoInput grupoInput) {
         try {
             Grupo grupoAtual = cadastroGrupo.buscarOuFalhar(grupoId);
-
             grupoInputDisassembler.copyToDomainObject(grupoInput, grupoAtual);
-
-            return grupoModelAssembler.toModel(cadastroGrupo.salvar(grupoAtual));
+            grupoAtual = cadastroGrupo.salvar(grupoAtual);
+            return grupoModelAssembler.toModel(grupoAtual);
         } catch (GrupoNaoEncontradoException e) {
             throw new NegocioException(e.getMessage());
         }
