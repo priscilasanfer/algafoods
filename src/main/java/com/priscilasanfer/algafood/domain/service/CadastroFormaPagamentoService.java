@@ -1,8 +1,7 @@
 package com.priscilasanfer.algafood.domain.service;
 
-import com.priscilasanfer.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.EntidadeEmUsoException;
-import com.priscilasanfer.algafood.domain.exception.FormaPagamentoNaoEncontradoException;
+import com.priscilasanfer.algafood.domain.exception.FormaPagamentoNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.model.FormaPagamento;
 import com.priscilasanfer.algafood.domain.repository.FormaPagamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ public class CadastroFormaPagamentoService {
             formaPagamentoRepository.deleteById(formaPagamentoId);
             formaPagamentoRepository.flush();
         } catch (EmptyResultDataAccessException e) {
-            throw new FormaPagamentoNaoEncontradoException(formaPagamentoId);
+            throw new FormaPagamentoNaoEncontradaException(formaPagamentoId);
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
                     String.format(MSG_FORMA_PAGAMENTO_EM_USO, formaPagamentoId));
@@ -40,6 +39,6 @@ public class CadastroFormaPagamentoService {
 
     public FormaPagamento buscarOuFalhar(Long formaPagamentoId) {
         return formaPagamentoRepository.findById(formaPagamentoId)
-                .orElseThrow(() -> new FormaPagamentoNaoEncontradoException(formaPagamentoId));
+                .orElseThrow(() -> new FormaPagamentoNaoEncontradaException(formaPagamentoId));
     }
 }
