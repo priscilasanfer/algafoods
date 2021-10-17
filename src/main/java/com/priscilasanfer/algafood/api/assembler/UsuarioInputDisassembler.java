@@ -3,11 +3,13 @@ package com.priscilasanfer.algafood.api.assembler;
 import com.priscilasanfer.algafood.api.model.input.UsuarioInput;
 import com.priscilasanfer.algafood.domain.model.Usuario;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UsuarioInputDisassembler {
 
+    @Autowired
     private ModelMapper modelMapper;
 
     public Usuario toDomainObject(UsuarioInput usuarioInput) {
