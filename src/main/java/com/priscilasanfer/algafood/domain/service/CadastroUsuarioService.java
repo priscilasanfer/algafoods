@@ -3,6 +3,7 @@ package com.priscilasanfer.algafood.domain.service;
 import com.priscilasanfer.algafood.domain.exception.EntidadeEmUsoException;
 import com.priscilasanfer.algafood.domain.exception.NegocioException;
 import com.priscilasanfer.algafood.domain.exception.UsuarioNaoEncontradoException;
+import com.priscilasanfer.algafood.domain.model.Grupo;
 import com.priscilasanfer.algafood.domain.model.Usuario;
 import com.priscilasanfer.algafood.domain.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class CadastroUsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private CadastroGrupoService cadastroGrupo;
 
     @Transactional
     public Usuario salvar(Usuario usuario) {
@@ -61,5 +65,21 @@ public class CadastroUsuarioService {
             throw new EntidadeEmUsoException(
                     String.format(MSG_USUARIO_EM_USO, grupoId));
         }
+    }
+
+    @Transactional
+    public void desassociarGrupo(Long usuarioId, Long grupoId) {
+        Usuario usuario = buscarOuFalhar(usuarioId);
+        Grupo grupo = cadastroGrupo.buscarOuFalhar(grupoId);
+
+        usuario.removerGrupo(grupo);
+    }
+
+    @Transactional
+    public void associarGrupo(Long usuarioId, Long grupoId) {
+        Usuario usuario = buscarOuFalhar(usuarioId);
+        Grupo grupo = cadastroGrupo.buscarOuFalhar(grupoId);
+
+        usuario.adicionarGrupo(grupo);
     }
 }
