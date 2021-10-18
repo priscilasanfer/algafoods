@@ -1,10 +1,7 @@
 package com.priscilasanfer.algafood.domain.service;
 
 import com.priscilasanfer.algafood.domain.exception.RestauranteNaoEncontradoException;
-import com.priscilasanfer.algafood.domain.model.Cidade;
-import com.priscilasanfer.algafood.domain.model.Cozinha;
-import com.priscilasanfer.algafood.domain.model.FormaPagamento;
-import com.priscilasanfer.algafood.domain.model.Restaurante;
+import com.priscilasanfer.algafood.domain.model.*;
 import com.priscilasanfer.algafood.domain.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +21,9 @@ public class CadastroRestauranteService {
 
     @Autowired
     private CadastroFormaPagamentoService cadastroFormaPagamento;
+
+    @Autowired
+    private CadastroUsuarioService cadastroUsuario;
 
     @Transactional
     public Restaurante salvar(Restaurante restaurante) {
@@ -81,6 +81,22 @@ public class CadastroRestauranteService {
     public void abrir(Long restauranteId) {
         Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
         restauranteAtual.abrir();
+    }
+
+    @Transactional
+    public void desassociarResponsavel(Long restauranteId, Long usuarioId) {
+        Restaurante restaurante = buscarOuFalhar(restauranteId);
+        Usuario usuario = cadastroUsuario.buscarOuFalhar(usuarioId);
+
+        restaurante.removerResponsavel(usuario);
+    }
+
+    @Transactional
+    public void associarResponsavel(Long restauranteId, Long usuarioId) {
+        Restaurante restaurante = buscarOuFalhar(restauranteId);
+        Usuario usuario = cadastroUsuario.buscarOuFalhar(usuarioId);
+
+        restaurante.adicionarResponsavel(usuario);
     }
 
 }
