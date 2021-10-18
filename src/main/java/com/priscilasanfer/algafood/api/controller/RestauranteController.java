@@ -7,6 +7,7 @@ import com.priscilasanfer.algafood.api.model.input.RestauranteInput;
 import com.priscilasanfer.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.NegocioException;
+import com.priscilasanfer.algafood.domain.exception.RestauranteNaoEncontradoException;
 import com.priscilasanfer.algafood.domain.model.Restaurante;
 import com.priscilasanfer.algafood.domain.repository.RestauranteRepository;
 import com.priscilasanfer.algafood.domain.service.CadastroRestauranteService;
@@ -92,6 +93,26 @@ public class RestauranteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void abrir(@PathVariable Long restauranteId){
         cadastroRestaurante.abrir(restauranteId);
+    }
+
+    @PutMapping("/ativacoes")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ativarMultiplo(@RequestBody List<Long> restauranteIds){
+        try {
+            cadastroRestaurante.ativar(restauranteIds);
+        }catch (RestauranteNaoEncontradoException e){
+            throw new NegocioException(e.getMessage(), e);
+        }
+    }
+
+    @PutMapping("/inativacoes")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void inativarMultiplo(@RequestBody List<Long> restauranteIds){
+        try {
+            cadastroRestaurante.inativar(restauranteIds);
+        }catch (RestauranteNaoEncontradoException e){
+            throw new NegocioException(e.getMessage(), e);
+        }
     }
 
 }
