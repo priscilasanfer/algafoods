@@ -1,7 +1,9 @@
 package com.priscilasanfer.algafood.api.controller;
 
 import com.priscilasanfer.algafood.api.assembler.PedidoModelAssembler;
+import com.priscilasanfer.algafood.api.assembler.PedidoResumoModelAssembler;
 import com.priscilasanfer.algafood.api.model.PedidoModel;
+import com.priscilasanfer.algafood.api.model.PedidoResumoModel;
 import com.priscilasanfer.algafood.domain.repository.PedidoRepository;
 import com.priscilasanfer.algafood.domain.service.EmissaoPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +27,12 @@ public class PedidoController {
     @Autowired
     private PedidoModelAssembler pedidoModelAssembler;
 
+    @Autowired
+    private PedidoResumoModelAssembler pedidoResumoModelAssembler;
+
     @GetMapping
-    public List<PedidoModel> listar() {
-         return pedidoModelAssembler.toCollectionModel(pedidoRepository.findAll());
+    public List<PedidoResumoModel> listar() {
+         return pedidoResumoModelAssembler.toCollectionModel(pedidoRepository.findAll());
     }
 
     @GetMapping("/{pedidoId}")
