@@ -1,12 +1,10 @@
 package com.priscilasanfer.algafood.domain.exception;
 
+import java.util.UUID;
+
 public class PedidoNaoEncontradoException extends EntidadeNaoEncontradaException {
 
-    public PedidoNaoEncontradoException(String mensagem) {
-        super(mensagem);
-    }
-
-    public PedidoNaoEncontradoException(Long pedidoId) {
-        this(String.format("Não existe um pedido com código %d", pedidoId));
+    public PedidoNaoEncontradoException(String pedidoId) {
+        super(String.format("Não existe um pedido com código %s", pedidoId));
     }
 }
