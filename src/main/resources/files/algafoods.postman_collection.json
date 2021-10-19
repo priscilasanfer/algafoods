@@ -809,6 +809,11 @@
 									"key": "projecao",
 									"value": "apenas-nome",
 									"disabled": true
+								},
+								{
+									"key": "campos",
+									"value": null,
+									"disabled": true
 								}
 							]
 						}
@@ -1356,7 +1361,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/pedidos?campos=codigo,valorTotal",
+							"raw": "localhost:8080/pedidos",
 							"host": [
 								"localhost"
 							],
@@ -1367,7 +1372,23 @@
 							"query": [
 								{
 									"key": "campos",
-									"value": "codigo,valorTotal"
+									"value": "codigo,valorTotal",
+									"disabled": true
+								},
+								{
+									"key": "campos",
+									"value": "sub*",
+									"disabled": true
+								},
+								{
+									"key": "campos",
+									"value": "cliente[id,nome]",
+									"disabled": true
+								},
+								{
+									"key": "campos",
+									"value": "-codigo,-cliente",
+									"disabled": true
 								}
 							]
 						}

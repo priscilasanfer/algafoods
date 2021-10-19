@@ -1,6 +1,5 @@
 package com.priscilasanfer.algafood.api.model;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +8,6 @@ import java.time.OffsetDateTime;
 
 @Setter
 @Getter
-@JsonFilter("pedidoFilter")
 public class PedidoResumoModel {
 
     private String codigo;
