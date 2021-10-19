@@ -7,3 +7,6 @@ Site: https://www.algaworks.com/
 
 
 API baseada no Backend do Ifood
+
+### Coleção Postman
+- [Postman](src/main/resources/files/algafoods.postman_collection.json)
