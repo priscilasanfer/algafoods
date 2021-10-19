@@ -1389,6 +1389,26 @@
 									"key": "campos",
 									"value": "-codigo,-cliente",
 									"disabled": true
+								},
+								{
+									"key": "clienteId",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "restauranteId",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "dataCriacaoInicio",
+									"value": "2021-10-18T00:00:00Z",
+									"disabled": true
+								},
+								{
+									"key": "dataCriacaoFim",
+									"value": "2021-10-21T00:00:00Z",
+									"disabled": true
 								}
 							]
 						}
@@ -1531,7 +1551,7 @@
 			"name": "produtos",
 			"item": [
 				{
-					"name": "Produtos - Listar de Um Restaurante",
+					"name": "Produtos - Listar Todos os Produtos de Um Restaurante",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1557,6 +1577,13 @@
 								"restaurantes",
 								":restauranteId",
 								"produtos"
+							],
+							"query": [
+								{
+									"key": "incluirInativos",
+									"value": "true",
+									"disabled": true
+								}
 							],
 							"variable": [
 								{
