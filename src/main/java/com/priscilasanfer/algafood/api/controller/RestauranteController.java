@@ -1,9 +1,11 @@
 package com.priscilasanfer.algafood.api.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.priscilasanfer.algafood.api.assembler.RestauranteInputDisassembler;
 import com.priscilasanfer.algafood.api.assembler.RestauranteModelAssembler;
 import com.priscilasanfer.algafood.api.model.RestauranteModel;
 import com.priscilasanfer.algafood.api.model.input.RestauranteInput;
+import com.priscilasanfer.algafood.api.model.view.RestauranteView;
 import com.priscilasanfer.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.NegocioException;
@@ -35,8 +37,15 @@ public class RestauranteController {
     private RestauranteInputDisassembler restauranteInputDisassembler;
 
     @GetMapping
+    @JsonView(RestauranteView.Resumo.class)
     public List<RestauranteModel> listar() {
         return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
+    }
+
+    @JsonView(RestauranteView.ApenasNome.class)
+    @GetMapping(params = "projecao=apenas-nome")
+    public List<RestauranteModel> listarApenasNomes() {
+        return listar();
     }
 
     @GetMapping("/{restauranteId}")
