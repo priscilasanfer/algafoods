@@ -15,6 +15,9 @@ import com.priscilasanfer.algafood.domain.repository.filter.PedidoFilter;
 import com.priscilasanfer.algafood.domain.service.EmissaoPedidoService;
 import com.priscilasanfer.algafood.infrastructure.repository.spec.PedidoSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,10 +44,11 @@ public class PedidoController {
     private PedidoInputDisassembler pedidoInputDisassembler;
 
     @GetMapping
-    public List<PedidoResumoModel> pesquisar(PedidoFilter filtro) {
-        List<Pedido> todosPedidos = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro));
-
-        return pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
+    public Page<PedidoResumoModel> pesquisar(PedidoFilter filtro, Pageable paginacao) {
+        Page<Pedido> todosPedidos = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro), paginacao);
+        List<PedidoResumoModel> pedidosModels = pedidoResumoModelAssembler.toCollectionModel(todosPedidos.getContent());
+        Page<PedidoResumoModel> pedidosPageModel = new PageImpl<>(pedidosModels, paginacao, todosPedidos.getTotalElements());
+        return pedidosPageModel;
     }
 
     @GetMapping("/{codigoPedido}")
