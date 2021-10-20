@@ -167,6 +167,23 @@
 							"port": "8080",
 							"path": [
 								"cozinhas"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "nome,asc",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "2",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -1392,7 +1409,7 @@
 								},
 								{
 									"key": "clienteId",
-									"value": "1",
+									"value": "1w",
 									"disabled": true
 								},
 								{
@@ -1402,7 +1419,7 @@
 								},
 								{
 									"key": "dataCriacaoInicio",
-									"value": "2021-10-18T00:00:00Z",
+									"value": "2021-10-18T00:00:00",
 									"disabled": true
 								},
 								{
