@@ -1,11 +1,13 @@
 package com.priscilasanfer.algafood.api.controller;
 
+import com.google.common.collect.ImmutableMap;
 import com.priscilasanfer.algafood.api.assembler.PedidoInputDisassembler;
 import com.priscilasanfer.algafood.api.assembler.PedidoModelAssembler;
 import com.priscilasanfer.algafood.api.assembler.PedidoResumoModelAssembler;
 import com.priscilasanfer.algafood.api.model.PedidoModel;
 import com.priscilasanfer.algafood.api.model.PedidoResumoModel;
 import com.priscilasanfer.algafood.api.model.input.PedidoInput;
+import com.priscilasanfer.algafood.core.data.PageableTranslator;
 import com.priscilasanfer.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.priscilasanfer.algafood.domain.exception.NegocioException;
 import com.priscilasanfer.algafood.domain.model.Pedido;
@@ -44,10 +46,11 @@ public class PedidoController {
     private PedidoInputDisassembler pedidoInputDisassembler;
 
     @GetMapping
-    public Page<PedidoResumoModel> pesquisar(PedidoFilter filtro, Pageable paginacao) {
-        Page<Pedido> todosPedidos = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro), paginacao);
+    public Page<PedidoResumoModel> pesquisar(PedidoFilter filtro, Pageable pageable) {
+        traduzirPageable(pageable);
+        Page<Pedido> todosPedidos = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro), pageable);
         List<PedidoResumoModel> pedidosModels = pedidoResumoModelAssembler.toCollectionModel(todosPedidos.getContent());
-        Page<PedidoResumoModel> pedidosPageModel = new PageImpl<>(pedidosModels, paginacao, todosPedidos.getTotalElements());
+        Page<PedidoResumoModel> pedidosPageModel = new PageImpl<>(pedidosModels, pageable, todosPedidos.getTotalElements());
         return pedidosPageModel;
     }
 
@@ -70,5 +73,16 @@ public class PedidoController {
         } catch (EntidadeNaoEncontradaException e) {
             throw new NegocioException(e.getMessage(), e);
         }
+    }
+
+    private Pageable traduzirPageable(Pageable pageable){
+        var mapeamento = ImmutableMap.of(
+                "codigo", "codigo",
+                "nomeCliente", "cliente.nome",
+                "restaurante.nome", "restaurante.nome",
+                "valorTotal", "valorTotal"
+        );
+
+        return PageableTranslator.translate(pageable, mapeamento);
     }
 }
