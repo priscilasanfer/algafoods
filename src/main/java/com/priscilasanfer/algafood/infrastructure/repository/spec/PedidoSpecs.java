@@ -1,8 +1,7 @@
 package com.priscilasanfer.algafood.infrastructure.repository.spec;
 
 import com.priscilasanfer.algafood.domain.model.Pedido;
-import com.priscilasanfer.algafood.domain.repository.filter.PedidoFilter;
-import org.springframework.data.domain.Pageable;
+import com.priscilasanfer.algafood.domain.filter.PedidoFilter;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;

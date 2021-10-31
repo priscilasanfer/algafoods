@@ -13,7 +13,7 @@ import com.priscilasanfer.algafood.domain.exception.NegocioException;
 import com.priscilasanfer.algafood.domain.model.Pedido;
 import com.priscilasanfer.algafood.domain.model.Usuario;
 import com.priscilasanfer.algafood.domain.repository.PedidoRepository;
-import com.priscilasanfer.algafood.domain.repository.filter.PedidoFilter;
+import com.priscilasanfer.algafood.domain.filter.PedidoFilter;
 import com.priscilasanfer.algafood.domain.service.EmissaoPedidoService;
 import com.priscilasanfer.algafood.infrastructure.repository.spec.PedidoSpecs;
 import org.springframework.beans.factory.annotation.Autowired;

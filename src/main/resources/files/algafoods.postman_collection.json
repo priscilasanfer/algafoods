@@ -303,6 +303,30 @@
 			]
 		},
 		{
+			"name": "estatisticas",
+			"item": [
+				{
+					"name": "Vendas diarias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/estatisticas/vendas-diarias",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"estatisticas",
+								"vendas-diarias"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "estados",
 			"item": [
 				{
@@ -1378,7 +1402,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/pedidos",
+							"raw": "localhost:8080/pedidos?page=0&size=20&sort=codigo,desc",
 							"host": [
 								"localhost"
 							],
@@ -1409,18 +1433,15 @@
 								},
 								{
 									"key": "page",
-									"value": null,
-									"disabled": true
+									"value": "0"
 								},
 								{
 									"key": "size",
-									"value": null,
-									"disabled": true
+									"value": "20"
 								},
 								{
 									"key": "sort",
-									"value": null,
-									"disabled": true
+									"value": "codigo,desc"
 								}
 							]
 						}
