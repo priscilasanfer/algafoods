@@ -22,7 +22,7 @@ public class VendaQueryServiceImpl implements VendaQueryService {
     private EntityManager manager;
 
     @Override
-    public List<VendaDiarias> consultarVendasDiarias(VendasDiariasFilter filter) {
+    public List<VendaDiarias> consultarVendasDiarias(VendasDiariasFilter filter, String timeOffset) {
         var builder = manager.getCriteriaBuilder();
         var query = builder.createQuery(VendaDiarias.class);
         var root = query.from(Pedido.class);
@@ -43,8 +43,12 @@ public class VendaQueryServiceImpl implements VendaQueryService {
             predicates.add(builder.equal(root.get("restaurante"), filter.getRestauranteId()));
         }
 
+        var functionConvertTzData = builder.function(
+                "convert_tz", Date.class, root.get("dataCriacao"), builder.literal("+00:00"),
+                builder.literal(timeOffset));
+
         var functionDateDataCriacao = builder.function(
-                "date", Date.class, root.get("dataCriacao"));
+                "date", Date.class, functionConvertTzData);
 
         var selection = builder.construct(VendaDiarias.class,
                 functionDateDataCriacao,
