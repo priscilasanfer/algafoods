@@ -11,7 +11,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class VendaDiarias {
-    private Date date;
+    private Date data;
     private Long totalVendas;
     private BigDecimal totalFaturado;
 }

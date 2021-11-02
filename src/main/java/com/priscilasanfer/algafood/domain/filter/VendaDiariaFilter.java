@@ -8,7 +8,7 @@ import java.time.OffsetDateTime;
 
 @Setter
 @Getter
-public class VendasDiariasFilter {
+public class VendaDiariaFilter {
     private Long restauranteId;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

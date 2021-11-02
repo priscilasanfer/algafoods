@@ -1,6 +1,6 @@
-package com.priscilasanfer.algafood.infrastructure.service;
+package com.priscilasanfer.algafood.infrastructure.service.query;
 
-import com.priscilasanfer.algafood.domain.filter.VendasDiariasFilter;
+import com.priscilasanfer.algafood.domain.filter.VendaDiariaFilter;
 import com.priscilasanfer.algafood.domain.model.Pedido;
 import com.priscilasanfer.algafood.domain.model.StatusPedido;
 import com.priscilasanfer.algafood.domain.model.dto.VendaDiarias;
@@ -11,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class VendaQueryServiceImpl implements VendaQueryService {
     private EntityManager manager;
 
     @Override
-    public List<VendaDiarias> consultarVendasDiarias(VendasDiariasFilter filter, String timeOffset) {
+    public List<VendaDiarias> consultarVendasDiarias(VendaDiariaFilter filter, String timeOffset) {
         var builder = manager.getCriteriaBuilder();
         var query = builder.createQuery(VendaDiarias.class);
         var root = query.from(Pedido.class);

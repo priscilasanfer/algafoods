@@ -309,7 +309,19 @@
 					"name": "Vendas diarias",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/pdf,application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "localhost:8080/estatisticas/vendas-diarias?restauranteId=1&dataCriacaoInicio=2019-10-30T00:00:00Z&dataCriacaoFim=2019-11-03T00:00:00Z&timeOffset=-03:00",
 							"host": [
