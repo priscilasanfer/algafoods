@@ -1,6 +1,6 @@
 package com.priscilasanfer.algafood.api.controller;
 
-import com.priscilasanfer.algafood.api.assembler.FotoProdutoAssember;
+import com.priscilasanfer.algafood.api.assembler.FotoProdutoModelAssembler;
 import com.priscilasanfer.algafood.api.model.FotoProdutoModel;
 import com.priscilasanfer.algafood.api.model.input.FotoProdutoInput;
 import com.priscilasanfer.algafood.domain.model.FotoProduto;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/restaurantes/{restauranteId}/produtos/{produtoId}/foto")
@@ -28,11 +29,11 @@ public class RestauranteProdutoFotoController {
     private CadastroProdutoService cadastroProdutoService;
 
     @Autowired
-    private FotoProdutoAssember fotoProdutoAssember;
+    private FotoProdutoModelAssembler fotoProdutoAssembler;
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public FotoProdutoModel atualizarFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
-                                          @Valid FotoProdutoInput fotoProdutoInput) {
+                                          @Valid FotoProdutoInput fotoProdutoInput) throws IOException {
 
         Produto produto = cadastroProdutoService.buscarOuFalhar(restauranteId, produtoId);
 
@@ -45,9 +46,9 @@ public class RestauranteProdutoFotoController {
         foto.setTamanho(arquivo.getSize());
         foto.setNomeArquivo(arquivo.getOriginalFilename());
 
-        FotoProduto fotoSalva = catalogoFotoProdutoService.salvar(foto);
+        FotoProduto fotoSalva = catalogoFotoProdutoService.salvar(foto, arquivo.getInputStream());
 
-        return fotoProdutoAssember.toModel(fotoSalva);
+        return fotoProdutoAssembler.toModel(fotoSalva);
 
     }
 }
