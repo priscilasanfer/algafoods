@@ -703,7 +703,8 @@
 							{
 								"key": "Accept",
 								"value": "application/json",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							},
 							{
 								"key": "Accept",
@@ -711,6 +712,59 @@
 								"type": "text"
 							}
 						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": "/Users/prissantos/Desktop/catalogo/comida-vegana.jpeg"
+								},
+								{
+									"key": "descricao",
+									"value": "Comida Vegana",
+									"type": "text"
+								},
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/restaurantes/:restauranteId/produtos/:produtoId/foto",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								":restauranteId",
+								"produtos",
+								":produtoId",
+								"foto"
+							],
+							"variable": [
+								{
+									"key": "restauranteId",
+									"value": "1"
+								},
+								{
+									"key": "produtoId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fotos de Produto - Remover",
+					"request": {
+						"method": "DELETE",
+						"header": [],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
