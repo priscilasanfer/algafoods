@@ -7,12 +7,10 @@ import com.priscilasanfer.algafood.domain.model.FotoProduto;
 import com.priscilasanfer.algafood.domain.model.Produto;
 import com.priscilasanfer.algafood.domain.service.CadastroProdutoService;
 import com.priscilasanfer.algafood.domain.service.CatalogoFotoProdutoService;
+import com.priscilasanfer.algafood.domain.service.FotoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -50,5 +48,11 @@ public class RestauranteProdutoFotoController {
 
         return fotoProdutoAssembler.toModel(fotoSalva);
 
+    }
+
+    @GetMapping
+    public FotoProdutoModel buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId){
+        FotoProduto fotoProduto = catalogoFotoProdutoService.buscarOuFalhar(restauranteId, produtoId);
+        return  fotoProdutoAssembler.toModel(fotoProduto);
     }
 }

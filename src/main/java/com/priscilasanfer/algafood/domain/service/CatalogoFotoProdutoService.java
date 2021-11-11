@@ -1,5 +1,6 @@
 package com.priscilasanfer.algafood.domain.service;
 
+import com.priscilasanfer.algafood.domain.exception.FotoProdutoNaoEncontradoException;
 import com.priscilasanfer.algafood.domain.model.FotoProduto;
 import com.priscilasanfer.algafood.domain.repository.ProdutoRepository;
 import com.priscilasanfer.algafood.domain.service.FotoStorageService.NovaFoto;
@@ -45,5 +46,10 @@ public class CatalogoFotoProdutoService {
         fotoStorage.substituir(nomeArquivoExistente, novaFoto);
 
         return foto;
+    }
+
+    public FotoProduto buscarOuFalhar(Long restauranteId, Long produtoId) {
+        return produtoRepository.findFotoById(restauranteId, produtoId)
+                .orElseThrow(() -> new FotoProdutoNaoEncontradoException(restauranteId, produtoId));
     }
 }
