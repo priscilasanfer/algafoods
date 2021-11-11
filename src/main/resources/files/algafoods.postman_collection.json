@@ -637,6 +637,131 @@
 			]
 		},
 		{
+			"name": "fotos produtos",
+			"item": [
+				{
+					"name": "Fotos de Produto - Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": "/Users/prissantos/Desktop/catalogo/comida-vegana.jpeg"
+								},
+								{
+									"key": "descricao",
+									"value": "Comida Vegana",
+									"type": "text"
+								},
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/restaurantes/:restauranteId/produtos/:produtoId/foto",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								":restauranteId",
+								"produtos",
+								":produtoId",
+								"foto"
+							],
+							"variable": [
+								{
+									"key": "restauranteId",
+									"value": "1"
+								},
+								{
+									"key": "produtoId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fotos de Produto - Buscar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "image/jpeg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": "/Users/prissantos/Desktop/catalogo/comida-vegana.jpeg"
+								},
+								{
+									"key": "descricao",
+									"value": "Comida Vegana",
+									"type": "text"
+								},
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/restaurantes/:restauranteId/produtos/:produtoId/foto",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								":restauranteId",
+								"produtos",
+								":produtoId",
+								"foto"
+							],
+							"variable": [
+								{
+									"key": "restauranteId",
+									"value": "1"
+								},
+								{
+									"key": "produtoId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "grupos",
 			"item": [
 				{
