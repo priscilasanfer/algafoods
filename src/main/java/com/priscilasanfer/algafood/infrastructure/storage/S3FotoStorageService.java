@@ -1,5 +1,6 @@
 package com.priscilasanfer.algafood.infrastructure.storage;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.priscilasanfer.algafood.core.storage.StorageProperties;
 import com.priscilasanfer.algafood.domain.service.FotoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.nio.file.Path;
 public class S3FotoStorageService implements FotoStorageService {
 
     @Autowired
-    private StorageProperties storageProperties;
+    private AmazonS3 amazonS3;
 
     @Override
     public InputStream recuperar(String nomeArquivo) {
