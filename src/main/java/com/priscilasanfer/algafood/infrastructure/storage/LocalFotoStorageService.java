@@ -3,11 +3,9 @@ package com.priscilasanfer.algafood.infrastructure.storage;
 import com.priscilasanfer.algafood.core.storage.StorageProperties;
 import com.priscilasanfer.algafood.domain.service.FotoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -18,10 +16,14 @@ public class LocalFotoStorageService implements FotoStorageService {
     private StorageProperties storageProperties;
 
     @Override
-    public InputStream recuperar(String nomeArquivo) {
+    public FotoRecuperada recuperar(String nomeArquivo) {
         try {
             Path arquivoPath = getArquivoPath(nomeArquivo);
-            return Files.newInputStream(arquivoPath);
+
+            return FotoRecuperada.builder()
+                    .inputStream(Files.newInputStream(arquivoPath))
+                    .build();
+
         } catch (Exception e) {
             throw new StorageException("Não foi possível recuperar arquivo", e);
         }

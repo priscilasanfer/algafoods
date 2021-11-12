@@ -11,7 +11,7 @@ import java.nio.file.Path;
 @Getter
 @Setter
 @Component
-@ConfigurationProperties("algafood.storage")
+@ConfigurationProperties("algafoods.storage")
 public class StorageProperties {
 
     private Local local = new Local();
