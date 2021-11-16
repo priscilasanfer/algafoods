@@ -1,7 +1,7 @@
 package com.priscilasanfer.algafood.domain.service;
 
 import com.priscilasanfer.algafood.domain.model.Pedido;
-import com.priscilasanfer.algafood.domain.service.EnvioEmailService.Mensagem;
+import com.priscilasanfer.algafood.domain.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,20 +13,13 @@ public class FluxoPedidoService {
     private EmissaoPedidoService emissaoPedidoService;
 
     @Autowired
-    private EnvioEmailService envioEmailService;
+    private PedidoRepository repository;
 
     @Transactional
     public void confirmar(String codigoPedido) {
         Pedido pedido = emissaoPedidoService.buscarOuFalhar(codigoPedido);
         pedido.confirmar();
-        var mensagem = Mensagem.builder()
-                .assunto(pedido.getRestaurante().getNome() + "- Pedido confirmado.")
-                .corpo("pedido-confirmado.html")
-                .destinatario(pedido.getCliente().getEmail())
-                .variavel("pedido", pedido)
-                .build();
-
-        envioEmailService.enviar(mensagem);
+        repository.save(pedido);
     }
 
     @Transactional

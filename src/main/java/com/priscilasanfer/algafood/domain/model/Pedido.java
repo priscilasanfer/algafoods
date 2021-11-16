@@ -1,9 +1,11 @@
 package com.priscilasanfer.algafood.domain.model;
 
+import com.priscilasanfer.algafood.domain.event.PedidoConfirmadoEvent;
 import com.priscilasanfer.algafood.domain.exception.NegocioException;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -13,9 +15,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
-public class Pedido {
+public class Pedido extends AbstractAggregateRoot<Pedido> {
 
     @EqualsAndHashCode.Include
     @Id
@@ -66,12 +68,13 @@ public class Pedido {
         this.valorTotal = this.subtotal.add(this.taxaFrete);
     }
 
-    public void confirmar(){
-       setStatus(StatusPedido.CONFIRMADO);
+    public void confirmar() {
+        setStatus(StatusPedido.CONFIRMADO);
         setDataConfirmacao(OffsetDateTime.now());
+        registerEvent(new PedidoConfirmadoEvent(this));
     }
 
-    public void entregar(){
+    public void entregar() {
         setStatus(StatusPedido.ENTREGUE);
         setDataEntrega(OffsetDateTime.now());
     }
@@ -82,17 +85,17 @@ public class Pedido {
     }
 
     private void setStatus(StatusPedido novoStatus) {
-        if(getStatus().naoPodeAlterarPara(novoStatus)){
+        if (getStatus().naoPodeAlterarPara(novoStatus)) {
             throw new NegocioException(
                     String.format("Status pedido %s não pode ser alterado de %s para %s ",
-                           getCodigo(), getStatus().getDescricao(), novoStatus.getDescricao()));
+                            getCodigo(), getStatus().getDescricao(), novoStatus.getDescricao()));
         }
 
-       this.status = novoStatus;
+        this.status = novoStatus;
     }
 
     @PrePersist
-    private void gerarCodigo(){
+    private void gerarCodigo() {
         setCodigo(UUID.randomUUID().toString());
     }
 }
