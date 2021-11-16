@@ -7,6 +7,7 @@ import com.priscilasanfer.algafood.domain.service.EnvioEmailService.Mensagem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 public class NotificacaoClientePedidoConfirmadoListener {
@@ -14,7 +15,7 @@ public class NotificacaoClientePedidoConfirmadoListener {
     @Autowired
     private EnvioEmailService envioEmailService;
 
-    @EventListener
+    @TransactionalEventListener // evento é tratado depois que a transação for comitada e se der erro nao faz rollback e nesse caso nao envia o email
     public void aoConfirmarPedido(PedidoConfirmadoEvent event) {
         Pedido pedido = event.getPedido();
 
